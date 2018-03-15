@@ -32,7 +32,7 @@ toolbar.on("topic", () => {
 });
 
 toolbar.on("limit", val => {
-    messages.setMessageLimit(val); // bool
+    messages.setMessageLimit(val);
 });
 
 client.onConnected = () => {

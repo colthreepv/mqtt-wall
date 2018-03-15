@@ -52,27 +52,26 @@ export class MessageLine {
     }
 
     init() {
-        this.$root = $("<article class='message'>");
+        this.$root = $(`
+            <article class='message'>
+                <header>
+                    <h2>${ this.topic }</h2>
+                    ${ window.config.showCounter ? `<span class='mark counter' title='Message counter'>0</span>` : '' }
+                    <span class='mark retain' title='Retain message'>R</span>
+                    <span class='mark qos' title='Received message QoS'>QoS</span>
+                </header>
+                <div class="payload">
+                    <span class="date"></span>
+                    <div class="payload-data"></div>
+                </div>
+            </article>
+        `);
 
-        var header = $("<header>").appendTo(this.$root);
-
-        $("<h2>")
-            .text(this.topic)
-            .appendTo(header);
-
-        if (window.config.showCounter) {
-            this.$counterMark = $("<span class='mark counter' title='Message counter'>0</span>")
-                .appendTo(header);
-        }
-
-        this.$retainMark = $("<span class='mark retain' title='Retain message'>R</span>")
-            .appendTo(header);
-
-        this.$qosMark = $("<span class='mark qos' title='Received message QoS'>QoS</span>")
-            .appendTo(header);
-
-        this.$date = $("<span class='date'></span>").appendTo(this.$root);
-        this.$payload = $("<p>").appendTo(this.$root);
+        this.$date = this.$root.find('.date');
+        this.$payload = this.$root.find('.payload-data');
+        this.$counterMark = this.$root.find('.mark.counter');
+        this.$retainMark = this.$root.find('.mark.retain');
+        this.$qosMark = this.$root.find('.mark.qos');
     }
 
     set isRetained(value) {
@@ -126,7 +125,7 @@ export class MessageLine {
             }
         }
 
-        this.$date.text(new Date())
+        this.$date.text(new Date().toISOString());
         try {
             payload = JSON.parse(payload)
             this.$payload.prepend(renderjson.set_show_to_level(1)(payload))

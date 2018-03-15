@@ -140,22 +140,21 @@ Messages code:
 
     .message {
         .clearfix();
-        text-align: right;
         border-bottom: solid @message-separator-color 1px; 
         padding: .3rem;
+        display: flex;
 
         header {
-            float: left;
+            display: inline-block;
             padding: .1rem;
             color: #333;
-            
-
             font-size: 1.1rem;
 
             h2 {
                 display: inline-block;
                 padding-top: .2rem;
                 margin-right: .5rem;
+                vertical-align: top;
             }
 
             .mark {
@@ -189,14 +188,18 @@ Messages code:
             }
         }
 
+        .payload {
+            display: flex;
+            flex-direction: column;
+        }
+        .payload .renderjson { margin-bottom: 0.5rem; }
+
         .date {
             color: #777;
-            font-size: 0.6rem;
-            float: right;
+            // font-size: rem;
         }
 
-        p {
-            float: right;
+        .payload-data {
             font-size: 1.1rem;
             display: inline-block;
             padding: .3rem .5rem;
